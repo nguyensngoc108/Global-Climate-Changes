@@ -12,8 +12,9 @@ import morgan from "morgan";
 
 connectDB();
 
-app.use(morgan('combined'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.use("/api/countries", countryRoute);
 
