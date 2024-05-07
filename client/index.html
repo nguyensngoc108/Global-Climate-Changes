@@ -1,4 +1,4 @@
-<!-- <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,85 +10,4 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>DSDV project</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="d3/d3.js"></script>
-    <script type="text/javascript" src="script.js"></script>
-
-</head>
-<body>
-    <header class="header">
-        <nav class="nav">
-          <div class="logo" >
-            <h3>Global Climate Change Trends</h3>
-          </div>
-          
-        </nav>
-        <a class="github" href="https://github.com/nguyensngoc108/Global-Climate-Changes" style="text-align: center;">GitHub</a>
-    </header>
-    <div id="project_title">
-        <h1 id="title">CLIMATE CHANGE</h1>
-    </div>
-    <div>
-        <h3 id="introduction">The global community faces an unprecedented challenge in the form of climate change, a phenomenon with far-reaching consequences for our planet's ecosystems, weather patterns, and the well-being of its inhabitants. The scientific consensus is clear: human activities, particularly the burning of fossil fuels and deforestation, contribute significantly to the alteration of the Earth's climate. 
-            Understanding and effectively communicating the complex trends and impacts associated with climate change are crucial for fostering awareness, inspiring action, and influencing policy decisions. Traditional modes of conveying this information often fall short in conveying the urgency and interconnectedness of the issues at hand. 
-            </h3>
-    </div>
-
-
-
-
-
-
-
-
-
-    
-
-
-
-  <div id="visualization"></div>
-
-  <div class="world_map_title"><h4>Average temperature in the world in:</h4></div>
-  <div class="year-selection">
-    <label class="year-select-label">
-        <select id="year-select">
-            <option value="y2018">2018</option>
-            <option value="y2019">2019</option>
-            <option value="y2020">2020</option>
-            <option value="y2021">2021</option>
-            <option selected value="y2022">2022</option>
-        </select>
-    </label>
-    <button id="ChangeMap_Button">Change Chart</button>
-    <h2 class="bar__title"></h2>
-    <div style="text-align: center;">
-        <div id="modifyButtons">
-            <!-- <div id="yearButtons"></div> -->
-            <div class="selectAdd">
-                <select id="countrySelect-add">
-                </select>
-                <button id="addButton">Add</button>
-            </div>
-            <div class="selectDelete">
-                <select id="countrySelect-delete">
-                </select>
-                <button id="deleteButton">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div id="world_map_SVG"></div>
-
-    <div id="bar_chart-svg"></div>
-    
-
-</body>
 </html>
