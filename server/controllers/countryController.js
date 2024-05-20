@@ -115,8 +115,8 @@ export const getAll = async (req, res, next) => {
       },
       {
         $project: {
-          _id: 0, // exclude the _id field
-          country: "$_id", // rename _id to country
+          _id: 0, 
+          country: "$_id", 
           id: 1, // include the id field
         },
       },
