@@ -3,6 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "bun run index.ts"
   },
   "devDependencies": {
@@ -14,8 +15,12 @@
   "dependencies": {
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
+    "build": "^0.1.4",
+    "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
+    "mystyle": "^1.0.0",
+    "mystyled": "^1.0.1",
     "react": "^18.2.0"
   }
 }

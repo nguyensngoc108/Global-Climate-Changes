@@ -10,6 +10,20 @@ import {
   Legend,
 } from "recharts";
 
+const style = {
+  backgroundColor: "white",
+  padding: "20px 25px",
+  outline: "0",
+  border: "0",
+  margin: "10px 0px",
+  cursor: "pointer",
+  opacity: "1.3",
+  display: 'flex', 
+  flexDirection: 'column', 
+  textAlign: 'center',
+  alignItems: 'center',
+};
+
 const PlotChart = ({ countryData, selectedCountries }) => {
   const [plotData, setPlotData] = useState([]);
   console.log("countryData in plotchart", countryData);
@@ -24,7 +38,8 @@ const PlotChart = ({ countryData, selectedCountries }) => {
   }, [countryData, selectedCountries]);
 
   return (
-    <LineChart width={600} height={300} data={plotData}>
+    <div style={style} >
+    <LineChart width={1000} height={500} data={plotData}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="dt" />
       <YAxis />
@@ -40,6 +55,8 @@ const PlotChart = ({ countryData, selectedCountries }) => {
         />
       ))}
     </LineChart>
+
+    </div>
   );
 };
 

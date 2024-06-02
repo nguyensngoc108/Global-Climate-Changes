@@ -3,7 +3,10 @@
   "module": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix ../client"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

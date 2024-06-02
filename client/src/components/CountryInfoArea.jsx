@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PlotChart from "./PlotChart.jsx";
+import '../App.css';
 
 export const CountryInfoArea = ({ countryData }) => {
   const [selectedCountries, setSelectedCountries] = useState([]);
@@ -31,7 +32,7 @@ export const CountryInfoArea = ({ countryData }) => {
 
   const renderCountryData = () => {
     return countryData.map((country) => (
-      <div key={country._id}>
+      <div  className = "countryData" key={country._id}>
         {selectedCountries.includes(country._id) && (
           <>
             <h2>{country.Country}</h2>
@@ -52,8 +53,10 @@ export const CountryInfoArea = ({ countryData }) => {
         countryData={countryData}
         selectedCountries={selectedCountries}
       />
-      <h1>Country Data</h1>
-      {renderCountryData()}
+      <div className = "countryData">
+        <h1>Country Data</h1>
+        {renderCountryData()}
+        </div>
     </div>
   );
 };
