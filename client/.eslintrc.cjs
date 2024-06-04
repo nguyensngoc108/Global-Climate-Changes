@@ -13,5 +13,7 @@ module.exports = {
   plugins: [],
   rules: {
     'react/jsx-no-target-blank': 'off',
+    "react/no-unescaped-entities": 0
   },
+  
 }

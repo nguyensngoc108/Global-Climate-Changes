@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { fetchData, postData } from "../services/api.js";
+import {fetchData, postData } from "../services/api.js";
 import DatePicker from "./DatePicker";
 import PropTypes from "prop-types";
 import SubmitButton from "./SubmitButton";
 // import CountryInfoArea from './CountryInfoArea'; // Import CountryInfoArea component
 import { addCountryData } from "../redux/actions/countryActions.js";
 import { useDispatch } from "react-redux";
+// import axios from "axios";
 
 const CountrySelectionBar = ({ onAddCountry }) => {
   const [countries, setCountries] = useState([]);
@@ -18,11 +19,49 @@ const CountrySelectionBar = ({ onAddCountry }) => {
   // const [countryData, setCountryData] = useState([]); // State to hold country data
   const searchRef = useRef(null);
   const dispatch = useDispatch();
+  
+  
+  // const mystyle = {
+  //   color: "white",
+  //   backgroundColor: "green",
+  //   padding: "20px",
+  //   fontFamily: "Arial",
+  //   alignContent: "center",
+  //   // display: "flex",
+  //   alignItems: "center"
+  // };
+const style = {
+    backgroundColor: "#90EE90",
+    padding: "20px 25px",
+    boxShadow:" 0px 2px 2px lightgray",
+    borderRadius: "5px",
+    outline: "0",
+    border: "0",
+    // textTransform: "uppercase",
+    margin: "10px 0px",
+    cursor: "pointer",
+    opacity: "1.3",
+    display: 'flex', 
+    flexDirection: 'column', 
+    textAlign: 'center'
+};
+
+const style_elemet ={
+  borderRadius: "5px",
+  outline: "0",
+  border: "0",
+  cursor: "pointer",
+  opacity: "1.3",
+  padding: '8px 0px',
+  alignItems: 'center',
+}
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
         const data = await fetchData("countries/");
+        // const data = await axios.get("http://localhost:8000/api/countries/");
+        console.log(data)
         setCountries(data.data);
         setDisplayCountries(data.data);
       } catch (error) {
@@ -89,15 +128,17 @@ const CountrySelectionBar = ({ onAddCountry }) => {
   };
 
   return (
-    <div ref={searchRef}>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Search countries"
-      />
+    <div style={style} ref={searchRef}>
+      <div style={{paddingBottom: '5px', textAlign: 'center',}}>
+        <input 
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder="Search countries"
+        />
+      </div>
       {showCountryList && (
-        <div>
+        <div >
           {displayCountries.map((country) => (
             <div key={country.id} onClick={() => handleCountrySelect(country)}>
               {country.country}
@@ -107,17 +148,17 @@ const CountrySelectionBar = ({ onAddCountry }) => {
       )}
       {selectedCountry && (
         <>
-          <DatePicker
-            label="From"
+          <div style={style_elemet}><DatePicker 
+            label = "From"
             selectedDate={startDate}
             onChange={handleStartDateChange}
-          />
-          <DatePicker
+          /></div>
+          <div style={style_elemet}><DatePicker
             label="To"
             selectedDate={endDate}
             onChange={handleEndDateChange}
-          />
-          <SubmitButton onSubmit={handleSubmit} />
+          /></div>
+          <div style={{paddingTop: '5px'}}><SubmitButton  onSubmit={handleSubmit} /></div>
         </>
       )}
       {/* <CountryInfoArea countryData={countryData} /> */}
