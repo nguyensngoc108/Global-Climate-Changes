@@ -12,12 +12,12 @@ const App = () => {
       );
 
       if (existingCountryIndex !== -1) {
-        // Update existing country data
+      
         const updatedData = [...prevData];
         updatedData[existingCountryIndex] = data;
         return updatedData;
       } else {
-        // Add new country data
+
         return [...prevData, data];
       }
     });

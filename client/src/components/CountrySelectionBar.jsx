@@ -51,13 +51,13 @@ const CountrySelectionBar = ({ onAddCountry }) => {
       country.country.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setDisplayCountries(filteredCountries);
-    setShowCountryList(true); // Show country list when typing in search bar
+    setShowCountryList(true); 
   };
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country.country);
-    setSearchTerm(country.country); // update searchTerm with the selected country
-    setShowCountryList(false); // Hide country list after selection
+    setSearchTerm(country.country);
+    setShowCountryList(false); 
   };
 
   const handleStartDateChange = (date) => {
@@ -79,7 +79,7 @@ const CountrySelectionBar = ({ onAddCountry }) => {
       const responseData = await postData("countries/search", data);
 
       dispatch(addCountryData(responseData));
-      onAddCountry(responseData.data); // Ensure onAddCountry is called with the new country data
+      onAddCountry(responseData.data); 
     } catch (error) {
       console.error("Error submitting data:", error);
     }

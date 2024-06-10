@@ -15,7 +15,6 @@ const CountryInfoArea = ({ countryData, setCountryData }) => {
     const updatedSelectedCountries = selectedCountries.filter((id) => id !== countryId);
     setSelectedCountries(updatedSelectedCountries);
 
-    // Update the countryData by removing the selected country
     const updatedCountryData = countryData.filter((country) => country._id !== countryId);
     setCountryData(updatedCountryData);
   };
