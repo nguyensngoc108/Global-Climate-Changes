@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchData, postData } from "../services/api.js";
-import DatePicker from "./DatePicker";
+import DatePicker from "./DatePicker.jsx";
 import PropTypes from "prop-types";
-import SubmitButton from "./SubmitButton";
-// import CountryInfoArea from './CountryInfoArea'; // Import CountryInfoArea component
+import SubmitButton from "./SubmitButton.jsx";
 import { addCountryData } from "../redux/actions/countryActions.js";
 import { useDispatch } from "react-redux";
 
@@ -15,7 +14,6 @@ const CountrySelectionBar = ({ onAddCountry }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [showCountryList, setShowCountryList] = useState(false);
-  // const [countryData, setCountryData] = useState([]); // State to hold country data
   const searchRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -79,10 +77,9 @@ const CountrySelectionBar = ({ onAddCountry }) => {
         endDate: endDate,
       };
       const responseData = await postData("countries/search", data);
-      console.log("Response data:", responseData);
 
       dispatch(addCountryData(responseData));
-      onAddCountry(responseData.data);
+      onAddCountry(responseData.data); // Ensure onAddCountry is called with the new country data
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -120,10 +117,10 @@ const CountrySelectionBar = ({ onAddCountry }) => {
           <SubmitButton onSubmit={handleSubmit} />
         </>
       )}
-      {/* <CountryInfoArea countryData={countryData} /> */}
     </div>
   );
 };
+
 CountrySelectionBar.propTypes = {
   onAddCountry: PropTypes.func.isRequired,
 };

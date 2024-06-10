@@ -1,21 +1,39 @@
-import CountrySelectionBar from './components/CountrySelectionBar.jsx';
 import { useState } from 'react';
-import {CountryInfoArea} from './components/CountryInfoArea.jsx';
-
+import CountrySelectionBar from './components/CountrySelectionBar.jsx';
+import CountryInfoArea from './components/CountryInfoArea.jsx';
+import './style/style.css';
 const App = () => {
   const [countryData, setCountryData] = useState([]);
 
   const handleAddCountry = (data) => {
-    setCountryData([...countryData, data]);
-  };
-  return (
+    setCountryData((prevData) => {
+      const existingCountryIndex = prevData.findIndex(
+        (country) => country._id === data._id
+      );
 
-    
+      if (existingCountryIndex !== -1) {
+        // Update existing country data
+        const updatedData = [...prevData];
+        updatedData[existingCountryIndex] = data;
+        return updatedData;
+      } else {
+        // Add new country data
+        return [...prevData, data];
+      }
+    });
+  };
+
+  return (
     <div>
       <h1>Global Temperature Analysis</h1>
       <div className="container">
-        <CountrySelectionBar  onAddCountry={handleAddCountry}/>
-        <CountryInfoArea countryData={countryData} />
+        <CountrySelectionBar onAddCountry={handleAddCountry} />
+        {countryData.length > 0 && (
+          <CountryInfoArea
+            countryData={countryData}
+            setCountryData={setCountryData}
+          />
+        )}
       </div>
     </div>
   );

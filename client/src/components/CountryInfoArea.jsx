@@ -2,31 +2,22 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PlotChart from "./PlotChart.jsx";
 
-export const CountryInfoArea = ({ countryData }) => {
+const CountryInfoArea = ({ countryData, setCountryData }) => {
   const [selectedCountries, setSelectedCountries] = useState([]);
 
   useEffect(() => {
-    const handleAddCountry = (countryId) => {
-      console.log("Adding country:", countryId);
-      setSelectedCountries([...selectedCountries, countryId]);
-    };
-
-    // const handleRemoveCountry = (countryId) => {
-    //   console.log("Removing country:", countryId);
-    //   setSelectedCountries(selectedCountries.filter((id) => id !== countryId));
-    // };
-
-    countryData.forEach((country) => {
-      const isNewCountry = !selectedCountries.includes(country._id);
-      if (isNewCountry) {
-        handleAddCountry(country._id);
-      }
-    });
-  }, [countryData, selectedCountries]);
+    const newSelectedCountries = countryData.map((country) => country._id);
+    setSelectedCountries(newSelectedCountries);
+  }, [countryData]);
 
   const handleRemoveCountry = (countryId) => {
     console.log("Removing country:", countryId);
-    setSelectedCountries(selectedCountries.filter((id) => id !== countryId));
+    const updatedSelectedCountries = selectedCountries.filter((id) => id !== countryId);
+    setSelectedCountries(updatedSelectedCountries);
+
+    // Update the countryData by removing the selected country
+    const updatedCountryData = countryData.filter((country) => country._id !== countryId);
+    setCountryData(updatedCountryData);
   };
 
   const renderCountryData = () => {
@@ -60,4 +51,7 @@ export const CountryInfoArea = ({ countryData }) => {
 
 CountryInfoArea.propTypes = {
   countryData: PropTypes.array.isRequired,
+  setCountryData: PropTypes.func.isRequired,
 };
+
+export default CountryInfoArea;

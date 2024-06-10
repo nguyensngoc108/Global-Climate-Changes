@@ -8,38 +8,68 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Brush,
+  ResponsiveContainer,
 } from "recharts";
+import { DateTime } from "luxon";
+
+const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#0088fe"];
 
 const PlotChart = ({ countryData, selectedCountries }) => {
   const [plotData, setPlotData] = useState([]);
-  console.log("countryData in plotchart", countryData);
-  console.log("selectedCountries in plotchart", selectedCountries);
+
   useEffect(() => {
     const newData = countryData
       .filter((country) => selectedCountries.includes(country._id))
       .flatMap((country) =>
-        country.data.map((data) => ({ ...data, countryId: country._id }))
+        country.data.map((data) => ({
+          ...data,
+          countryId: country._id,
+          Country: country.Country,
+          dt: DateTime.fromISO(data.dt).toFormat("yyyy-MM-dd"), // Format date for better tooltip
+        }))
       );
     setPlotData(newData);
   }, [countryData, selectedCountries]);
 
+  const formatXAxis = (tickItem) => {
+    return DateTime.fromISO(tickItem).toFormat("MMM yyyy");
+  };
+
   return (
-    <LineChart width={600} height={300} data={plotData}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="dt" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      {selectedCountries.map((countryId, index) => (
-        <Line
-          key={index}
-          type="monotone"
-          dataKey="AverageTemperature"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
+    <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={plotData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="dt"
+          tickFormatter={formatXAxis}
+          type="category"
+          interval="preserveStartEnd"
         />
-      ))}
-    </LineChart>
+        <YAxis />
+        <Tooltip
+          labelFormatter={(label) =>
+            DateTime.fromISO(label).toFormat("yyyy-MM-dd")
+          }
+        />
+        <Legend />
+        <Brush dataKey="dt" height={30} stroke="#8884d8" />
+        {selectedCountries.map((countryId, index) => {
+          const country = countryData.find((c) => c._id === countryId);
+          return (
+            <Line
+              key={countryId}
+              type="monotone"
+              dataKey="AverageTemperature"
+              data={plotData.filter((data) => data.countryId === countryId)}
+              stroke={colors[index % colors.length]}
+              name={country.Country}
+              activeDot={{ r: 8 }}
+            />
+          );
+        })}
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 
