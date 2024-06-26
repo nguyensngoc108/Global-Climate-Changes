@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CountrySelectionBar from './components/CountrySelectionBar.jsx';
 import CountryInfoArea from './components/CountryInfoArea.jsx';
+import CountryMap from './components/CountryMaps.jsx';
 import './style/style.css';
 const App = () => {
   const [countryData, setCountryData] = useState([]);
@@ -28,6 +29,7 @@ const App = () => {
       <h1>Global Temperature Analysis</h1>
       <div className="container">
         <CountrySelectionBar onAddCountry={handleAddCountry} />
+        <CountryMap countryData={countryData} />
         {countryData.length > 0 && (
           <CountryInfoArea
             countryData={countryData}

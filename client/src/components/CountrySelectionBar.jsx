@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import SubmitButton from "./SubmitButton.jsx";
 import { addCountryData } from "../redux/actions/countryActions.js";
 import { useDispatch } from "react-redux";
+import debounce from "lodash.debounce";
 
 const CountrySelectionBar = ({ onAddCountry }) => {
   const [countries, setCountries] = useState([]);
@@ -31,7 +32,6 @@ const CountrySelectionBar = ({ onAddCountry }) => {
   }, []);
 
   useEffect(() => {
-    // Close country list when clicking outside the search bar
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowCountryList(false);
@@ -44,20 +44,24 @@ const CountrySelectionBar = ({ onAddCountry }) => {
     };
   }, []);
 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value;
-    setSearchTerm(searchTerm);
+  const handleSearch = debounce((searchTerm) => {
     const filteredCountries = countries.filter((country) =>
       country.country.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setDisplayCountries(filteredCountries);
-    setShowCountryList(true); 
+    setShowCountryList(true);
+  }, 300);
+
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    handleSearch(searchTerm);
   };
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country.country);
     setSearchTerm(country.country);
-    setShowCountryList(false); 
+    setShowCountryList(false);
   };
 
   const handleStartDateChange = (date) => {
@@ -79,31 +83,37 @@ const CountrySelectionBar = ({ onAddCountry }) => {
       const responseData = await postData("countries/search", data);
 
       dispatch(addCountryData(responseData));
-      onAddCountry(responseData.data); 
+      onAddCountry(responseData.data);
     } catch (error) {
       console.error("Error submitting data:", error);
     }
   };
 
   return (
-    <div ref={searchRef}>
+    <div className="country-selection-bar" ref={searchRef}>
       <input
         type="text"
         value={searchTerm}
-        onChange={handleSearch}
+        onChange={handleInputChange}
         placeholder="Search countries"
+        aria-label="Search countries"
       />
       {showCountryList && (
-        <div>
+        <div className="country-list" aria-expanded="true">
           {displayCountries.map((country) => (
-            <div key={country.id} onClick={() => handleCountrySelect(country)}>
+            <div
+              key={country.id}
+              onClick={() => handleCountrySelect(country)}
+              className="country-item"
+              role="option"
+            >
               {country.country}
             </div>
           ))}
         </div>
       )}
       {selectedCountry && (
-        <>
+        <div className="date-picker-container">
           <DatePicker
             label="From"
             selectedDate={startDate}
@@ -115,7 +125,7 @@ const CountrySelectionBar = ({ onAddCountry }) => {
             onChange={handleEndDateChange}
           />
           <SubmitButton onSubmit={handleSubmit} />
-        </>
+        </div>
       )}
     </div>
   );

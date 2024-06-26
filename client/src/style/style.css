@@ -21,6 +21,13 @@ h1 {
   color: #444;
   text-align: center;
   margin-bottom: 20px;
+  font-family: 'Arial', sans-serif; /* Use a custom font */
+  font-size: 2.5em; /* Increase the font size */
+  text-shadow: 2px 2px 4px #999; /* Add a subtle text shadow */
+  padding: 10px; /* Add some padding */
+  border-radius: 5px; /* Round the corners */
+  background: #f2f2f2; /* Add a light background */
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Add a subtle box shadow */
 }
 
 h2 {
@@ -139,4 +146,38 @@ button:hover {
 
 .dark-mode button:hover {
   background-color: #0056b3;
+}
+
+.country-selection-bar {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.country-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background: #fff;
+  z-index: 1000;
+}
+
+.country-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.country-item:hover {
+  background-color: #f0f0f0;
+}
+
+.date-picker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
 }

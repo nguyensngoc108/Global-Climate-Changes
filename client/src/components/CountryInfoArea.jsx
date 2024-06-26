@@ -27,6 +27,7 @@ const CountryInfoArea = ({ countryData, setCountryData }) => {
             <h2>{country.Country}</h2>
             <p>Start Date: {country.startDate}</p>
             <p>End Date: {country.endDate}</p>
+            <p>Average Temperature: {country.avgTemp}°C</p>
             <button onClick={() => handleRemoveCountry(country._id)}>
               Remove
             </button>

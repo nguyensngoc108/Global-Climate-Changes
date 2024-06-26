@@ -45,8 +45,7 @@ export const getTemperatureByCountryAndDate = async (req, res, next) => {
       },
       {
         $group: {
-          // generate a unique id for each group
-          _id: uuidv4(),
+          _id: "$Country",
           Country: { $first: "$Country" },
           startDate: { $first: "$dt" }, // Get the oldest date
           endDate: { $last: "$dt" }, // Get the latest date
@@ -61,6 +60,7 @@ export const getTemperatureByCountryAndDate = async (req, res, next) => {
               AverageTemperature: "$AverageTemperature",
             },
           },
+          avgTemp: { $avg: "$AverageTemperature" }, // Calculate the average temperature
         },
       },
       {
@@ -80,6 +80,7 @@ export const getTemperatureByCountryAndDate = async (req, res, next) => {
             },
           },
           data: 1,
+          avgTemp: { $round: ["$avgTemp", 2] }, // Round the average temperature to 2 decimal places
         },
       },
     ]);
@@ -95,6 +96,7 @@ export const getTemperatureByCountryAndDate = async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const getAllCountriesTemperature = async (req, res, next) => {
   const { date } = req.body;
